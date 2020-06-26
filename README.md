@@ -154,10 +154,9 @@ second replication group on ```6387, 6379``` and third replication group on ephe
 Redis version
 ==============
 
-When not provided with the desired redis executable, RedisServer runs os-dependent executable enclosed in jar. Currently is uses:
-- Redis 2.8.19 in case of Linux/Unix
-- Redis 2.8.19 in case of OSX
-- Redis 2.8.19 in case of Windows: https://github.com/MSOpenTech/redis/releases/tag/win-2.8.19
+When not provided with the desired redis executable, RedisServer runs os-dependent executable enclosed in jar. Currently it uses:
+- Redis 6.0.5 in case of Linux/Unix
+- Redis 6.0.5 in case of OSX
 
 However, you should provide RedisServer with redis executable if you need specific version.
 
