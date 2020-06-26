@@ -1,0 +1,26 @@
+124304:C 26 Jun 2020 12:23:30.115 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+124304:C 26 Jun 2020 12:23:30.115 # Redis version=6.0.5, bits=64, commit=00000000, modified=0, pid=124304, just started
+124304:C 26 Jun 2020 12:23:30.115 # Warning: no config file specified, using the default config. In order to specify a config file use ./src/main/resources/redis-server-6.0.5 /path/to/redis.conf
+124304:M 26 Jun 2020 12:23:30.116 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+                _._
+           _.-``__ ''-._
+      _.-``    `.  `_.  ''-._           Redis 6.0.5 (00000000/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 124304
+  `-._    `-._  `-./  _.-'    _.-'
+ |`-._`-._    `-.__.-'    _.-'_.-'|
+ |    `-._`-._        _.-'_.-'    |           http://redis.io
+  `-._    `-._`-.__.-'_.-'    _.-'
+ |`-._`-._    `-.__.-'    _.-'_.-'|
+ |    `-._`-._        _.-'_.-'    |
+  `-._    `-._`-.__.-'_.-'    _.-'
+      `-._    `-.__.-'    _.-'
+          `-._        _.-'
+              `-.__.-'
+
+124304:M 26 Jun 2020 12:23:30.116 # Server initialized
+124304:M 26 Jun 2020 12:23:30.116 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+124304:M 26 Jun 2020 12:23:30.116 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
+124304:M 26 Jun 2020 12:23:30.116 * Ready to accept connections

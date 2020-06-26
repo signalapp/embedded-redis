@@ -24,14 +24,11 @@ public class RedisExecProvider {
     }
 
     private void initExecutables() {
-        executables.put(OsArchitecture.WINDOWS_x86, "redis-server-2.8.19.exe");
-        executables.put(OsArchitecture.WINDOWS_x86_64, "redis-server-2.8.19.exe");
+        executables.put(OsArchitecture.UNIX_x86, "redis-server-6.0.5-32");
+        executables.put(OsArchitecture.UNIX_x86_64, "redis-server-6.0.5");
 
-        executables.put(OsArchitecture.UNIX_x86, "redis-server-2.8.19-32");
-        executables.put(OsArchitecture.UNIX_x86_64, "redis-server-2.8.19");
-
-        executables.put(OsArchitecture.MAC_OS_X_x86, "redis-server-2.8.19.app");
-        executables.put(OsArchitecture.MAC_OS_X_x86_64, "redis-server-2.8.19.app");
+        executables.put(OsArchitecture.MAC_OS_X_x86, "redis-server-6.0.5.app");
+        executables.put(OsArchitecture.MAC_OS_X_x86_64, "redis-server-6.0.5.app");
     }
 
     public RedisExecProvider override(OS os, String executable) {
@@ -50,11 +47,17 @@ public class RedisExecProvider {
     
     public File get() throws IOException {
         OsArchitecture osArch = OsArchitecture.detect();
+
+        if (!executables.containsKey(osArch)) {
+            throw new IllegalArgumentException("No Redis executable found for " + osArch);
+        }
+
         String executablePath = executables.get(osArch);
-         return fileExists(executablePath) ?
+
+        return fileExists(executablePath) ?
                 new File(executablePath) :
                 JarUtil.extractExecutableFromJar(executablePath);
-        
+
     }
 
     private boolean fileExists(String executablePath) {

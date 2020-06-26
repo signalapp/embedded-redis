@@ -4,9 +4,6 @@ import com.google.common.base.Preconditions;
 
 public class OsArchitecture {
     
-    public static final OsArchitecture WINDOWS_x86 = new OsArchitecture(OS.WINDOWS, Architecture.x86);
-    public static final OsArchitecture WINDOWS_x86_64 = new OsArchitecture(OS.WINDOWS, Architecture.x86_64);
-    
     public static final OsArchitecture UNIX_x86 = new OsArchitecture(OS.UNIX, Architecture.x86);
     public static final OsArchitecture UNIX_x86_64 = new OsArchitecture(OS.UNIX, Architecture.x86_64);
     
@@ -54,5 +51,10 @@ public class OsArchitecture {
         int result = os.hashCode();
         result = 31 * result + arch.hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s (%s)", os.name(), arch.name());
     }
 }
