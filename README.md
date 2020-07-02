@@ -144,7 +144,7 @@ By default, RedisServer runs an OS-specific executable enclosed in in the `embed
 - Redis 6.0.5 for Linux/Unix (amd64 and x86)
 - Redis 6.0.5 for macOS (amd64)
 
-The enclosed binaries are built from source from the [`6.0.5` tag](https://github.com/antirez/redis/releases/tag/6.0.5) in the official Redis repository according to the [instructions in the README](https://github.com/antirez/redis/blob/51efb7fe25753867d39aa88a521f7c275fd8cddb/README.md#building-redis). Windows binaries are not included because Windows is not officially supported by Redis.
+The enclosed binaries are built from source from the [`6.0.5` tag](https://github.com/antirez/redis/releases/tag/6.0.5) in the official Redis repository. The Linux binaries are statically-linked amd64 and x86 executables built using the `build-server-binaries.sh` script included in this repository at `/src/main/docker`. The macOS binaries are built according to the [instructions in the README](https://github.com/antirez/redis/blob/51efb7fe25753867d39aa88a521f7c275fd8cddb/README.md#building-redis). Windows binaries are not included because Windows is not officially supported by Redis.
 
 Callers may provide a path to a specific `redis-server` executable if needed.
 
