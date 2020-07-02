@@ -1,8 +1,6 @@
 package redis.embedded;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import redis.embedded.exceptions.EmbeddedRedisException;
 
 import java.io.*;
@@ -13,8 +11,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 abstract class AbstractRedisInstance implements Redis {
-
-    private static Log log = LogFactory.getLog(AbstractRedisInstance.class);
 
     protected List<String> args = Collections.emptyList();
     private volatile boolean active = false;
@@ -89,14 +85,11 @@ abstract class AbstractRedisInstance implements Redis {
 
     public synchronized void stop() throws EmbeddedRedisException {
         if (active) {
-            log.info("Stopping redis server...");
-
             if (executor != null && !executor.isShutdown()) {
                 executor.shutdown();
             }
             redisProcess.destroy();
             tryWaitFor();
-            log.info("Redis exited");
             active = false;
         }
     }
