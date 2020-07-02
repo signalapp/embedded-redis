@@ -71,10 +71,6 @@
         </dependency>
     </dependencies>
 
-    <prerequisites>
-        <maven>3.0.4</maven>
-    </prerequisites>
-
     <distributionManagement>
         <repository>
             <id>ossrh</id>
