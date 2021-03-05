@@ -27,6 +27,8 @@ public class RedisExecProvider {
         executables.put(OsArchitecture.UNIX_x86, "redis-server-6.0.5-32");
         executables.put(OsArchitecture.UNIX_x86_64, "redis-server-6.0.5");
 
+        executables.put(OsArchitecture.UNIX_aarch64, "redis-server-6.0.5-linux-aarch64");
+
         executables.put(OsArchitecture.MAC_OS_X_x86, "redis-server-6.0.5.app");
         executables.put(OsArchitecture.MAC_OS_X_x86_64, "redis-server-6.0.5.app");
     }
