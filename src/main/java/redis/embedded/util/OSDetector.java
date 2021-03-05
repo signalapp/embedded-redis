@@ -50,24 +50,28 @@ public final class OSDetector {
 
     private static Architecture getUnixArchitecture() {
         try {
-            String line;
             Process proc = Runtime.getRuntime().exec("uname -m");
             try (BufferedReader input = new BufferedReader(new InputStreamReader(proc.getInputStream()))) {
+                String line;
                 while ((line = input.readLine()) != null) {
                     if (line.length() > 0) {
                         if (line.contains("x86_64")) {
                             return Architecture.x86_64;
                         } else if (line.contains("aarch64")) {
                             return Architecture.aarch64;
+                        } else {
+                            throw new OsDetectionException("Could not detect the CPU architecture from: " + line);
                         }
                     }
                 }
             }
         } catch (Exception e) {
+            if (e instanceof OsDetectionException) {
+                throw (OsDetectionException) e;
+            }
             throw new OsDetectionException(e);
         }
-
-        return Architecture.x86;
+        throw new OsDetectionException("Could not detect the CPU architecture!");
     }
 
     private static Architecture getMacOSXArchitecture() {
