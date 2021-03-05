@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,7 +98,7 @@ public class RedisServerBuilder {
         if (redisConf == null && redisConfigBuilder != null) {
             File redisConfigFile = File.createTempFile(resolveConfigName(), ".conf");
             redisConfigFile.deleteOnExit();
-            Files.write(redisConfigBuilder.toString(), redisConfigFile, Charset.forName("UTF-8"));
+            Files.asCharSink(redisConfigFile, StandardCharsets.UTF_8).write(redisConfigBuilder.toString());
             redisConf = redisConfigFile.getAbsolutePath();
         }
 
@@ -113,7 +114,7 @@ public class RedisServerBuilder {
     }
 
     private List<String> buildCommandArgs() {
-        List<String> args = new ArrayList<String>();
+        List<String> args = new ArrayList<>();
         args.add(executable.getAbsolutePath());
 
         if (!Strings.isNullOrEmpty(redisConf)) {

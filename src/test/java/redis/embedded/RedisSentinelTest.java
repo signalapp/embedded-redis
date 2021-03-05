@@ -10,7 +10,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 public class RedisSentinelTest {
     private RedisSentinel sentinel;
@@ -28,7 +30,7 @@ public class RedisSentinelTest {
     }
 
     @Test
-    public void shouldAllowSubsequentRuns() throws Exception {
+    public void shouldAllowSubsequentRuns() {
         sentinel = RedisSentinel.builder().build();
         sentinel.start();
         sentinel.stop();
@@ -62,8 +64,12 @@ public class RedisSentinelTest {
             assertEquals("2", jedis.mget("def").get(0));
             assertNull(jedis.mget("xyz").get(0));
         } finally {
-            if (jedis != null)
-                pool.returnResource(jedis);
+            if (jedis != null) {
+                jedis.close();
+            }
+            if (pool != null) {
+                pool.destroy();
+            }
             sentinel.stop();
             server.stop();
         }
@@ -75,20 +81,17 @@ public class RedisSentinelTest {
 
         assertReadyPattern(new BufferedReader(
                         new InputStreamReader(getClass()
-                                .getClassLoader()
-                                .getResourceAsStream("redis-2.x-sentinel-startup-output.txt"))),
+                                .getResourceAsStream("/redis-2.x-sentinel-startup-output.txt"))),
                 readyPattern);
 
         assertReadyPattern(new BufferedReader(
                         new InputStreamReader(getClass()
-                                .getClassLoader()
-                                .getResourceAsStream("redis-3.x-sentinel-startup-output.txt"))),
+                                .getResourceAsStream("/redis-3.x-sentinel-startup-output.txt"))),
                 readyPattern);
 
         assertReadyPattern(new BufferedReader(
                         new InputStreamReader(getClass()
-                                .getClassLoader()
-                                .getResourceAsStream("redis-4.x-sentinel-startup-output.txt"))),
+                                .getResourceAsStream("/redis-4.x-sentinel-startup-output.txt"))),
                 readyPattern);
     }
 

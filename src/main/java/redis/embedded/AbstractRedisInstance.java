@@ -3,7 +3,11 @@ package redis.embedded;
 import org.apache.commons.io.IOUtils;
 import redis.embedded.exceptions.EmbeddedRedisException;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -55,22 +59,19 @@ abstract class AbstractRedisInstance implements Redis {
     }
 
     private void awaitRedisServerReady() throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(redisProcess.getInputStream()));
-        try {
-            StringBuffer outputStringBuffer = new StringBuffer();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(redisProcess.getInputStream()))) {
+            StringBuilder outputStringBuffer = new StringBuilder();
             String outputLine;
             do {
                 outputLine = reader.readLine();
                 if (outputLine == null) {
                     //Something goes wrong. Stream is ended before server was activated.
-                    throw new RuntimeException("Can't start redis server. Check logs for details. Redis process log: " + outputStringBuffer.toString());
+                    throw new EmbeddedRedisException("Can't start redis server. Check logs for details. Redis process log: " + outputStringBuffer.toString());
                 } else {
-                    outputStringBuffer.append("\n");
+                    outputStringBuffer.append('\n');
                     outputStringBuffer.append(outputLine);
                 }
             } while (!outputLine.matches(redisReadyPattern()));
-        } finally {
-            IOUtils.closeQuietly(reader);
         }
     }
 

@@ -7,6 +7,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class RedisServerClusterTest {
 
@@ -14,7 +15,7 @@ public class RedisServerClusterTest {
     private RedisServer redisServer2;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp()  {
         redisServer1 = RedisServer.builder()
                 .port(6300)
                 .build();
@@ -29,7 +30,7 @@ public class RedisServerClusterTest {
     }
 
     @Test
-    public void testSimpleOperationsAfterRun() throws Exception {
+    public void testSimpleOperationsAfterRun()  {
         JedisPool pool = null;
         Jedis jedis = null;
         try {
@@ -39,16 +40,20 @@ public class RedisServerClusterTest {
 
             assertEquals("1", jedis.mget("abc").get(0));
             assertEquals("2", jedis.mget("def").get(0));
-            assertEquals(null, jedis.mget("xyz").get(0));
+            assertNull(jedis.mget("xyz").get(0));
         } finally {
-            if (jedis != null)
-                pool.returnResource(jedis);
+            if (jedis != null) {
+                jedis.close();
+            }
+            if (pool != null) {
+                pool.destroy();
+            }
         }
     }
 
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         redisServer1.stop();
         redisServer2.stop();
     }

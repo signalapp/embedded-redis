@@ -6,7 +6,7 @@ import redis.embedded.exceptions.RedisBuildingException;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -139,7 +139,7 @@ public class RedisSentinelBuilder {
 
         File redisConfigFile = File.createTempFile(resolveConfigName(), ".conf");
         redisConfigFile.deleteOnExit();
-        Files.write(configString, redisConfigFile, Charset.forName("UTF-8"));
+        Files.asCharSink(redisConfigFile, StandardCharsets.UTF_8).write(configString);
         sentinelConf = redisConfigFile.getAbsolutePath();
     }
 
@@ -150,7 +150,7 @@ public class RedisSentinelBuilder {
     private List<String> buildCommandArgs() {
         Preconditions.checkNotNull(sentinelConf);
 
-        List<String> args = new ArrayList<String>();
+        List<String> args = new ArrayList<>();
         args.add(executable.getAbsolutePath());
         args.add(sentinelConf);
         args.add("--sentinel");

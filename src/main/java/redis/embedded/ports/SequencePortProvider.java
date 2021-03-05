@@ -5,7 +5,8 @@ import redis.embedded.PortProvider;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class SequencePortProvider implements PortProvider {
-    private AtomicInteger currentPort = new AtomicInteger(26379);
+
+    private final AtomicInteger currentPort = new AtomicInteger(26379);
 
     public SequencePortProvider() {
     }
