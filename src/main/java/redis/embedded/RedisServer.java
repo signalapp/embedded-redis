@@ -19,6 +19,11 @@ public class RedisServer extends AbstractRedisInstance {
         this.args = builder().port(port).build().args;
 	}
 
+    public RedisServer(int port, int tlsPort) {
+        super(port, tlsPort);
+        this.args = builder().port(port).tlsPort(tlsPort).build().args;
+    }
+
     public RedisServer(File executable, int port) {
         super(port);
         this.args = Arrays.asList(
@@ -35,9 +40,9 @@ public class RedisServer extends AbstractRedisInstance {
         );
     }
 
-    RedisServer(List<String> args, int port) {
-        super(port);
-        this.args = new ArrayList<String>(args);
+    RedisServer(List<String> args, int port, int tlsPort) {
+        super(port, tlsPort);
+        this.args = new ArrayList<>(args);
     }
 
     public static RedisServerBuilder builder() {

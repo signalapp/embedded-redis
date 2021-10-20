@@ -12,23 +12,23 @@ import java.io.IOException;
 import java.util.Map;
 
 public class RedisExecProvider {
-    
+
     private final Map<OsArchitecture, String> executables = Maps.newHashMap();
 
     public static RedisExecProvider defaultProvider() {
         return new RedisExecProvider();
     }
-    
+
     private RedisExecProvider() {
         initExecutables();
     }
 
     private void initExecutables() {
-        executables.put(OsArchitecture.UNIX_x86, "redis-server-6.0.5-32");
-        executables.put(OsArchitecture.UNIX_x86_64, "redis-server-6.0.5");
+        executables.put(OsArchitecture.UNIX_x86, "redis-server-6.2.6-32");
+        executables.put(OsArchitecture.UNIX_x86_64, "redis-server-6.2.6");
 
-        executables.put(OsArchitecture.MAC_OS_X_x86, "redis-server-6.0.5.app");
-        executables.put(OsArchitecture.MAC_OS_X_x86_64, "redis-server-6.0.5.app");
+        executables.put(OsArchitecture.MAC_OS_X_x86, "redis-server-6.2.6.app");
+        executables.put(OsArchitecture.MAC_OS_X_x86_64, "redis-server-6.2.6.app");
     }
 
     public RedisExecProvider override(OS os, String executable) {
@@ -44,7 +44,7 @@ public class RedisExecProvider {
         executables.put(new OsArchitecture(os, arch), executable);
         return this;
     }
-    
+
     public File get() throws IOException {
         OsArchitecture osArch = OsArchitecture.detect();
 

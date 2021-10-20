@@ -59,6 +59,14 @@ public class RedisCluster implements Redis {
         return ports;
     }
 
+    @Override
+    public List<Integer> tlsPorts() {
+        List<Integer> ports = new ArrayList<Integer>();
+        ports.addAll(sentinelTlsPorts());
+        ports.addAll(serverTlsPorts());
+        return ports;
+    }
+
     public List<Redis> sentinels() {
         return Lists.newLinkedList(sentinels);
     }
@@ -71,6 +79,14 @@ public class RedisCluster implements Redis {
         return ports;
     }
 
+    public List<Integer> sentinelTlsPorts() {
+        List<Integer> ports = new ArrayList<Integer>();
+        for(Redis redis : sentinels) {
+            ports.addAll(redis.tlsPorts());
+        }
+        return ports;
+    }
+
     public List<Redis> servers() {
         return Lists.newLinkedList(servers);
     }
@@ -79,6 +95,14 @@ public class RedisCluster implements Redis {
         List<Integer> ports = new ArrayList<Integer>();
         for(Redis redis : servers) {
             ports.addAll(redis.ports());
+        }
+        return ports;
+    }
+
+    public List<Integer> serverTlsPorts() {
+        List<Integer> ports = new ArrayList<Integer>();
+        for(Redis redis : servers) {
+            ports.addAll(redis.tlsPorts());
         }
         return ports;
     }

@@ -12,4 +12,6 @@ public interface Redis {
     void stop() throws EmbeddedRedisException;
 
     List<Integer> ports();
+
+    List<Integer> tlsPorts();
 }
