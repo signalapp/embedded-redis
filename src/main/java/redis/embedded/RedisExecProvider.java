@@ -15,6 +15,8 @@ public class RedisExecProvider {
 
     private final Map<OsArchitecture, String> executables = Maps.newHashMap();
 
+    public static final String redisVersion = "6.2.6";
+
     public static RedisExecProvider defaultProvider() {
         return new RedisExecProvider();
     }
@@ -24,11 +26,12 @@ public class RedisExecProvider {
     }
 
     private void initExecutables() {
-        executables.put(OsArchitecture.UNIX_x86, "redis-server-6.2.6-32");
-        executables.put(OsArchitecture.UNIX_x86_64, "redis-server-6.2.6");
+        executables.put(OsArchitecture.UNIX_x86, "redis-server-" + redisVersion + "-linux-i386");
+        executables.put(OsArchitecture.UNIX_x86_64, "redis-server-" + redisVersion + "-linux-x86_64");
+        executables.put(OsArchitecture.UNIX_arm64, "redis-server-" + redisVersion + "-linux-arm64");
 
-        executables.put(OsArchitecture.MAC_OS_X_x86, "redis-server-6.2.6.app");
-        executables.put(OsArchitecture.MAC_OS_X_x86_64, "redis-server-6.2.6.app");
+        executables.put(OsArchitecture.MAC_OS_X_x86_64, "redis-server-" + redisVersion + "-darwin-x86_64");
+        executables.put(OsArchitecture.MAC_OS_X_arm64, "redis-server-" + redisVersion + "-darwin-arm64");
     }
 
     public RedisExecProvider override(OS os, String executable) {
