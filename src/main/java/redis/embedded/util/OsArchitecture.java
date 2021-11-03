@@ -6,9 +6,10 @@ public class OsArchitecture {
     
     public static final OsArchitecture UNIX_x86 = new OsArchitecture(OS.UNIX, Architecture.x86);
     public static final OsArchitecture UNIX_x86_64 = new OsArchitecture(OS.UNIX, Architecture.x86_64);
+    public static final OsArchitecture UNIX_arm64 = new OsArchitecture(OS.UNIX, Architecture.arm64);
     
-    public static final OsArchitecture MAC_OS_X_x86 = new OsArchitecture(OS.MAC_OS_X, Architecture.x86);
     public static final OsArchitecture MAC_OS_X_x86_64 = new OsArchitecture(OS.MAC_OS_X, Architecture.x86_64);
+    public static final OsArchitecture MAC_OS_X_arm64 = new OsArchitecture(OS.MAC_OS_X, Architecture.arm64);
 
     private final OS os;
     private final Architecture arch;
