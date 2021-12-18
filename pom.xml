@@ -188,8 +188,11 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>./gen-test-certs.sh</executable>
+                            <executable>./gen-test-certs-if-needed.sh</executable>
                             <workingDirectory>${project.basedir}/src/test/bash</workingDirectory>
+                            <arguments>
+                                <argument>${project.build.testOutputDirectory}</argument>
+                            </arguments>
                         </configuration>
                     </execution>
                     <execution>
