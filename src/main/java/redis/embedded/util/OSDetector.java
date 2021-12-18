@@ -47,58 +47,46 @@ public class OSDetector {
     }
 
     private static Architecture getUnixArchitecture() {
-        BufferedReader input = null;
         try {
-            String line;
             Process proc = Runtime.getRuntime().exec("uname -m");
-            input = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-            while ((line = input.readLine()) != null) {
-                if (line.length() > 0) {
-                    if (line.contains("64")) {
+            try (BufferedReader input = new BufferedReader(new InputStreamReader(proc.getInputStream()))) {
+                String machine = input.readLine();
+                switch (machine) {
+                    case "aarch64":
+                        return Architecture.arm64;
+                    case "x86_64":
                         return Architecture.x86_64;
-                    }
+                    default:
+                        throw new OsDetectionException("unsupported architecture: " + machine);
                 }
             }
         } catch (Exception e) {
-            throw new OsDetectionException(e);
-        } finally {
-            try {
-                if (input != null) {
-                    input.close();
-                }
-            } catch (Exception ignored) {
-                // ignore
+            if (e instanceof OsDetectionException) {
+                throw (OsDetectionException)e;
             }
+            throw new OsDetectionException(e);
         }
-
-        return Architecture.x86;
     }
 
     private static Architecture getMacOSXArchitecture() {
-        BufferedReader input = null;
         try {
-            String line;
-            Process proc = Runtime.getRuntime().exec("sysctl hw");
-            input = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-            while ((line = input.readLine()) != null) {
-                if (line.length() > 0) {
-                    if ((line.contains("cpu64bit_capable")) && (line.trim().endsWith("1"))) {
+            Process proc = Runtime.getRuntime().exec("uname -m");
+            try (BufferedReader input = new BufferedReader(new InputStreamReader(proc.getInputStream()))) {
+                String machine = input.readLine();
+                switch (machine) {
+                    case "arm64":
+                        return Architecture.arm64;
+                    case "x86_64":
                         return Architecture.x86_64;
-                    }
+                    default:
+                        throw new OsDetectionException("unsupported architecture: " + machine);
                 }
             }
         } catch (Exception e) {
-            throw new OsDetectionException(e);
-        } finally {
-            try {
-                if (input != null) {
-                    input.close();
-                }
-            } catch (Exception ignored) {
-                // ignore
+            if (e instanceof OsDetectionException) {
+                throw (OsDetectionException)e;
             }
+            throw new OsDetectionException(e);
         }
-
-        return Architecture.x86;
     }
 }
