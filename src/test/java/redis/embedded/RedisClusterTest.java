@@ -1,12 +1,14 @@
 package redis.embedded;
 
 import com.google.common.collect.Sets;
+import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisSentinelPool;
 import redis.embedded.util.JedisUtil;
 
+import java.io.Closeable;
 import java.net.Inet4Address;
 import java.util.Arrays;
 import java.util.List;
@@ -118,8 +120,7 @@ public class RedisClusterTest {
             pool = new JedisSentinelPool("ourmaster", Sets.newHashSet("localhost:26379"));
             jedis = testPool(pool);
         } finally {
-            if (jedis != null)
-                pool.returnResource(jedis);
+            closeQuietly(jedis, pool);
             cluster.stop();
         }
     }
@@ -137,8 +138,7 @@ public class RedisClusterTest {
             pool = new JedisSentinelPool("ourmaster", Sets.newHashSet("localhost:26379"));
             jedis = testPool(pool);
         } finally {
-            if (jedis != null)
-                pool.returnResource(jedis);
+            closeQuietly(jedis, pool);
             cluster.stop();
         }
     }
@@ -156,8 +156,7 @@ public class RedisClusterTest {
             pool = new JedisSentinelPool("ourmaster", Sets.newHashSet("localhost:26379"));
             jedis = testPool(pool);
         } finally {
-            if (jedis != null)
-                pool.returnResource(jedis);
+            closeQuietly(jedis, pool);
             cluster.stop();
         }
     }
@@ -175,8 +174,7 @@ public class RedisClusterTest {
             pool = new JedisSentinelPool("ourmaster", Sets.newHashSet("localhost:26379", "localhost:26380"));
             jedis = testPool(pool);
         } finally {
-            if (jedis != null)
-                pool.returnResource(jedis);
+            closeQuietly(jedis, pool);
             cluster.stop();
         }
     }
@@ -196,8 +194,7 @@ public class RedisClusterTest {
             pool = new JedisSentinelPool("ourmaster", sentinelHosts);
             jedis = testPool(pool);
         } finally {
-            if (jedis != null)
-                pool.returnResource(jedis);
+            closeQuietly(jedis, pool);
             cluster.stop();
         }
     }
@@ -230,12 +227,7 @@ public class RedisClusterTest {
             jedis2 = testPool(pool2);
             jedis3 = testPool(pool3);
         } finally {
-            if (jedis1 != null)
-                pool1.returnResource(jedis1);
-            if (jedis2 != null)
-                pool2.returnResource(jedis2);
-            if (jedis3 != null)
-                pool3.returnResource(jedis3);
+            closeQuietly(jedis1, pool1, jedis2, pool2, jedis3, pool3);
             cluster.stop();
         }
     }
@@ -269,12 +261,7 @@ public class RedisClusterTest {
             jedis2 = testPool(pool2);
             jedis3 = testPool(pool3);
         } finally {
-            if (jedis1 != null)
-                pool1.returnResource(jedis1);
-            if (jedis2 != null)
-                pool2.returnResource(jedis2);
-            if (jedis3 != null)
-                pool3.returnResource(jedis3);
+            closeQuietly(jedis1, pool1, jedis2, pool2, jedis3, pool3);
             cluster.stop();
         }
     }
@@ -290,4 +277,11 @@ public class RedisClusterTest {
         assertEquals(null, jedis.mget("xyz").get(0));
         return jedis;
     }
+
+    private void closeQuietly(Closeable... closeables) {
+        for (Closeable closeable : closeables) {
+            IOUtils.closeQuietly(closeable, null);
+        }
+    }
+
 }

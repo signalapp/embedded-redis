@@ -76,7 +76,7 @@ abstract class AbstractRedisInstance implements Redis {
                 }
             } while (!outputLine.matches(redisReadyPattern()));
         } finally {
-            IOUtils.closeQuietly(reader);
+            IOUtils.closeQuietly(reader, null);
         }
     }
 
@@ -127,7 +127,7 @@ abstract class AbstractRedisInstance implements Redis {
             try {
                 readLines();
             } finally {
-                IOUtils.closeQuietly(reader);
+                IOUtils.closeQuietly(reader, null);
             }
         }
 
