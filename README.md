@@ -5,7 +5,7 @@ Redis embedded server for Java integration testing
 
 Fork Notes
 ==============
-This repository is a fork of https://github.com/ozimov/embedded-redis, which is in turn a fork of https://github.com/kstyrc/embedded-redis. We've updated the embedded Redis binaries to version 6.0.5 so we can write tests that use recent Redis features without imposing dependencies that are not well-encapsulated by a single Maven/Gradle build.
+This repository is a fork of https://github.com/ozimov/embedded-redis, which is in turn a fork of https://github.com/kstyrc/embedded-redis. We've updated the embedded Redis binaries to version 6.2.6 so we can write tests that use recent Redis features without imposing dependencies that are not well-encapsulated by a single Maven/Gradle build.
 
 Maven dependency
 ==============
@@ -141,10 +141,10 @@ Redis version
 
 By default, RedisServer runs an OS-specific executable enclosed in in the `embedded-redis` jar. The jar includes:
 
-- Redis 6.0.5 for Linux/Unix (amd64 and x86)
-- Redis 6.0.5 for macOS (amd64)
+- Redis 6.2.6 for Linux/Unix (amd64 and x86)
+- Redis 6.2.6 for macOS (amd64)
 
-The enclosed binaries are built from source from the [`6.0.5` tag](https://github.com/antirez/redis/releases/tag/6.0.5) in the official Redis repository. The Linux binaries are statically-linked amd64 and x86 executables built using the `build-server-binaries.sh` script included in this repository at `/src/main/docker`. The macOS binaries are built according to the [instructions in the README](https://github.com/antirez/redis/blob/51efb7fe25753867d39aa88a521f7c275fd8cddb/README.md#building-redis). Windows binaries are not included because Windows is not officially supported by Redis.
+The enclosed binaries are built from source from the [`6.2.6` tag](https://github.com/redis/redis/releases/tag/6.2.6) in the official Redis repository. The Linux binaries are statically-linked amd64 and x86 executables built using the `build-server-binaries.sh` script included in this repository at `/src/main/docker`. The macOS binaries are built according to the [instructions in the README](https://github.com/redis/redis/blob/4930d19e70c391750479951022e207e19111eb55/README.md#building-redis). Windows binaries are not included because Windows is not officially supported by Redis.
 
 Callers may provide a path to a specific `redis-server` executable if needed.
 
@@ -152,6 +152,19 @@ Callers may provide a path to a specific `redis-server` executable if needed.
 License
 ==============
 Licensed under the Apache License, Version 2.0
+
+The included Redis binaries are covered by [Redis’s license](https://github.com/redis/redis/blob/4930d19e70c391750479951022e207e19111eb55/COPYING):
+
+> Copyright (c) 2006-2020, Salvatore Sanfilippo
+> All rights reserved.
+>
+> Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+>
+>    * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+>    * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+>    * Neither the name of Redis nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+>
+> THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 Contributors
@@ -163,9 +176,14 @@ Contributors
  * Sean Simonsen ([@SeanSimonsen](https://github.com/SeanSimonsen))
  * Rob Winch ([@rwinch](https://github.com/rwinch))
  * Jon Chambers ([@jchambers](https://github.com/jchambers))
+ * Chris Eager ([@eager](https://github.com/eager))
 
 Changelog
 ==============
+
+### 0.8.2
+ * Compiled Redis servers with TLS support
+ * Updated to Redis 6.2.6
 
 ### 0.8.1
 

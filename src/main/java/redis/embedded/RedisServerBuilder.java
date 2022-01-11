@@ -19,6 +19,7 @@ public class RedisServerBuilder {
     private RedisExecProvider redisExecProvider = RedisExecProvider.defaultProvider();
     private String bind="127.0.0.1";
     private int port = 6379;
+    private int tlsPort = 0;
     private InetSocketAddress slaveOf;
     private String redisConf;
 
@@ -36,6 +37,11 @@ public class RedisServerBuilder {
 
     public RedisServerBuilder port(int port) {
         this.port = port;
+        return this;
+    }
+
+    public RedisServerBuilder tlsPort(int tlsPort) {
+        this.tlsPort = tlsPort;
         return this;
     }
 
@@ -75,7 +81,7 @@ public class RedisServerBuilder {
         setting("bind "+bind);
         tryResolveConfAndExec();
         List<String> args = buildCommandArgs();
-        return new RedisServer(args, port);
+        return new RedisServer(args, port, tlsPort);
     }
 
     public void reset() {
@@ -122,6 +128,11 @@ public class RedisServerBuilder {
 
         args.add("--port");
         args.add(Integer.toString(port));
+
+        if (tlsPort > 0) {
+            args.add("--tls-port");
+            args.add(Integer.toString(tlsPort));
+        }
 
         if (slaveOf != null) {
             args.add("--slaveof");

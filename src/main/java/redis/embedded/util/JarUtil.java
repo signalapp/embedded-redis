@@ -10,14 +10,20 @@ import java.io.IOException;
 public class JarUtil {
 
     public static File extractExecutableFromJar(String executable) throws IOException {
-        File tmpDir = Files.createTempDir();
-        tmpDir.deleteOnExit();
-
-        File command = new File(tmpDir, executable);
-        FileUtils.copyURLToFile(Resources.getResource(executable), command);
-        command.deleteOnExit();
+        File command = extractFileFromJar(executable);
         command.setExecutable(true);
 
         return command;
+    }
+
+    public static File extractFileFromJar(String path) throws IOException {
+        File tmpDir = Files.createTempDir();
+        tmpDir.deleteOnExit();
+
+        File file = new File(tmpDir, path);
+        FileUtils.copyURLToFile(Resources.getResource(path), file);
+        file.deleteOnExit();
+
+        return file;
     }
 }

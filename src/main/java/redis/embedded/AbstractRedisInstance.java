@@ -16,11 +16,17 @@ abstract class AbstractRedisInstance implements Redis {
     private volatile boolean active = false;
     private Process redisProcess;
     private final int port;
+    private final int tlsPort;
 
     private ExecutorService executor;
 
-    protected AbstractRedisInstance(int port) {
+    protected AbstractRedisInstance(int port, int tlsPort) {
         this.port = port;
+        this.tlsPort = tlsPort;
+    }
+
+    protected AbstractRedisInstance(int port) {
+        this(port, 0);
     }
 
     public boolean isActive() {
@@ -103,7 +109,11 @@ abstract class AbstractRedisInstance implements Redis {
     }
 
     public List<Integer> ports() {
-        return Arrays.asList(port);
+        return port > 0 ? Collections.singletonList(port) : Collections.emptyList();
+    }
+
+    public List<Integer> tlsPorts() {
+        return tlsPort > 0 ? Collections.singletonList(tlsPort) : Collections.emptyList();
     }
 
     private static class PrintReaderRunnable implements Runnable {
