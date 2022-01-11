@@ -185,9 +185,9 @@ Changelog
 ==============
 
 ### 0.8.2
- * Compiled Redis servers with TLS support
  * Updated to Redis 6.2.6
- * Added native support for Apple Silicon (darwin/arm64)
+ * Added native support for Apple Silicon (darwin/arm64) and Linux aarch64
+ * Compiled Redis servers with TLS support
 
 ### 0.8.1
 
