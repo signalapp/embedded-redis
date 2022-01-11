@@ -38,10 +38,11 @@ RedisServer redisServer = new RedisServer("/path/to/your/redis", 6379);
 // 2) given os-independent matrix
 RedisExecProvider customProvider = RedisExecProvider.defaultProvider()
   .override(OS.UNIX, "/path/to/unix/redis")
-  .override(OS.WINDOWS, Architecture.x86, "/path/to/windows/redis")
-  .override(OS.Windows, Architecture.x86_64, "/path/to/windows/redis")
-  .override(OS.MAC_OS_X, Architecture.x86, "/path/to/macosx/redis")
-  .override(OS.MAC_OS_X, Architecture.x86_64, "/path/to/macosx/redis")
+  .override(OS.UNIX, Architecture.x86_64, "/path/to/unix/redis.x86_64")
+  .override(OS.UNIX, Architecture.arm64, "/path/to/unix/redis.arm64")
+  .override(OS.UNIX, Architecture.x86, "/path/to/unix/redis.i386")
+  .override(OS.MAC_OS_X, Architecture.x86_64, "/path/to/macosx/redis-x86_64")
+  .override(OS.MAC_OS_X, Architecture.arm64, "/path/to/macosx/redis.arm64")
   
 RedisServer redisServer = new RedisServer(customProvider, 6379);
 ```
@@ -141,10 +142,12 @@ Redis version
 
 By default, RedisServer runs an OS-specific executable enclosed in in the `embedded-redis` jar. The jar includes:
 
-- Redis 6.2.6 for Linux/Unix (amd64 and x86)
-- Redis 6.2.6 for macOS (amd64)
+- Redis 6.2.6 for Linux/Unix (i386, x86_64 and arm64)
+- Redis 6.2.6 for macOS (x86_64 and arm64e AKA Apple Silicon)
 
-The enclosed binaries are built from source from the [`6.2.6` tag](https://github.com/redis/redis/releases/tag/6.2.6) in the official Redis repository. The Linux binaries are statically-linked amd64 and x86 executables built using the `build-server-binaries.sh` script included in this repository at `/src/main/docker`. The macOS binaries are built according to the [instructions in the README](https://github.com/redis/redis/blob/4930d19e70c391750479951022e207e19111eb55/README.md#building-redis). Windows binaries are not included because Windows is not officially supported by Redis.
+The enclosed binaries are built from source from the [`6.2.6` tag](https://github.com/redis/redis/releases/tag/6.2.6) in the official Redis repository. The Linux and Darwin/macOS binaries are statically-linked amd64 and x86 executables built using the [build-server-binaries.sh](src/main/docker/build-server-binaries.sh) script included in this repository at `/src/main/docker`.  Windows binaries are not included because Windows is not officially supported by Redis.
+
+Note: the `build-server-binaries.sh` script attempts to build all of the above noted OS and architectures, which means that it expects the local Docker daemon to support all of them.  Docker Desktop on macOS and Windows supports multi-arch builds out of the box; Docker on Linux may require [additional configuration](https://docs.docker.com/buildx/working-with-buildx/).
 
 Callers may provide a path to a specific `redis-server` executable if needed.
 
@@ -182,8 +185,9 @@ Changelog
 ==============
 
 ### 0.8.2
- * Compiled Redis servers with TLS support
  * Updated to Redis 6.2.6
+ * Added native support for Apple Silicon (darwin/arm64) and Linux aarch64
+ * Compiled Redis servers with TLS support
 
 ### 0.8.1
 

@@ -97,9 +97,11 @@ public class RedisServerTest {
     @Test
     public void shouldOverrideDefaultExecutable() throws Exception {
         RedisExecProvider customProvider = RedisExecProvider.defaultProvider()
-                .override(OS.UNIX, Architecture.x86, Resources.getResource("redis-server-6.2.6-32").getFile())
-                .override(OS.UNIX, Architecture.x86_64, Resources.getResource("redis-server-6.2.6").getFile())
-                .override(OS.MAC_OS_X, Resources.getResource("redis-server-6.2.6").getFile());
+                .override(OS.UNIX, Architecture.x86, Resources.getResource("redis-server-" + RedisExecProvider.redisVersion + "-linux-i386").getFile())
+                .override(OS.UNIX, Architecture.x86_64, Resources.getResource("redis-server-" + RedisExecProvider.redisVersion + "-linux-x86_64").getFile())
+                .override(OS.UNIX, Architecture.arm64, Resources.getResource("redis-server-" + RedisExecProvider.redisVersion + "-linux-arm64").getFile())
+                .override(OS.MAC_OS_X, Architecture.x86_64, Resources.getResource("redis-server-" + RedisExecProvider.redisVersion + "-darwin-x86_64").getFile())
+                .override(OS.MAC_OS_X, Architecture.arm64, Resources.getResource("redis-server-" + RedisExecProvider.redisVersion + "-darwin-arm64").getFile());
 
         redisServer = new RedisServerBuilder()
                 .redisExecProvider(customProvider)
@@ -110,8 +112,6 @@ public class RedisServerTest {
     public void shouldFailWhenBadExecutableGiven() throws Exception {
         RedisExecProvider buggyProvider = RedisExecProvider.defaultProvider()
                 .override(OS.UNIX, "some")
-                .override(OS.WINDOWS, Architecture.x86, "some")
-                .override(OS.WINDOWS, Architecture.x86_64, "some")
                 .override(OS.MAC_OS_X, "some");
 
         redisServer = new RedisServerBuilder()
