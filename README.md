@@ -15,7 +15,7 @@ Maven Central:
 <dependency>
   <groupId>org.signal</groupId>
   <artifactId>embedded-redis</artifactId>
-  <version>0.8.0</version>
+  <version>0.8.2</version>
 </dependency>
 ```
 
