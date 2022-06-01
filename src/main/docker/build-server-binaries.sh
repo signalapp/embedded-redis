@@ -34,17 +34,25 @@ if ! [ -f "${REDIS_TARBALL}" ]; then
 fi
 
 all_linux=0
-if command -pv docker 2>/dev/null; then
-  for arch in x86_64 arm64 i386; do
+if command -pv docker buildx 2>/dev/null; then
+  for arch in amd64 arm64 386; do
+    builder_name="embedded-redis-builder-$RANDOM"
+
+    docker buildx create \
+      --name "$builder_name" \
+      --platform linux/amd64,linux/arm64,linux/386
+
+    docker buildx use "$builder_name"
 
     echo "*** Building redis version ${REDIS_VERSION} for linux-${arch}"
 
     set +e
-    docker build \
+    docker buildx build \
       "--platform=linux/${arch}" \
       --build-arg "REDIS_VERSION=${REDIS_VERSION}" \
       --build-arg "ARCH=${arch}" \
       -t "redis-server-builder-${arch}" \
+      --load \
       .
 
     if [[ $? -ne 0 ]]; then
@@ -53,9 +61,12 @@ if command -pv docker 2>/dev/null; then
     fi
     set -e
 
+    docker buildx rm "$builder_name"
+
     docker run -it --rm \
       "--platform=linux/${arch}" \
       -v "$(pwd)/":/mnt \
+      --user "$(id -u):$(id -g)" \
       "redis-server-builder-${arch}" \
       sh -c "cp /build/redis-server-${REDIS_VERSION}-linux-${arch} /mnt"
 
@@ -63,7 +74,7 @@ if command -pv docker 2>/dev/null; then
 
   done
 else
-  echo "*** WARNING: No docker command found. Cannot build for linux."
+  echo "*** WARNING: No docker command found or docker does not support buildx. Cannot build for linux."
 fi
 
 if [[ "${all_linux}" -lt 3 ]]; then
