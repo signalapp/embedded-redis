@@ -15,7 +15,7 @@ Maven Central:
 <dependency>
   <groupId>org.signal</groupId>
   <artifactId>embedded-redis</artifactId>
-  <version>0.8.2</version>
+  <version>0.8.3</version>
 </dependency>
 ```
 
@@ -184,13 +184,16 @@ Contributors
 Changelog
 ==============
 
+### 0.8.3
+ * Updated to Redis 6.2.7
+ * Statically link Linux binaries with OpenSSL instead of LibreSSL to avoid `openssl.cnf` incompatibilities
+
 ### 0.8.2
  * Updated to Redis 6.2.6
  * Added native support for Apple Silicon (darwin/arm64) and Linux aarch64
  * Compiled Redis servers with TLS support
 
 ### 0.8.1
-
  * Include statically-linked Redis binaries
  * Update still more dependencies
 
