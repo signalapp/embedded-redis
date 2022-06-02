@@ -5,7 +5,7 @@ Redis embedded server for Java integration testing
 
 Fork Notes
 ==============
-This repository is a fork of https://github.com/ozimov/embedded-redis, which is in turn a fork of https://github.com/kstyrc/embedded-redis. We've updated the embedded Redis binaries to version 6.2.6 so we can write tests that use recent Redis features without imposing dependencies that are not well-encapsulated by a single Maven/Gradle build.
+This repository is a fork of https://github.com/ozimov/embedded-redis, which is in turn a fork of https://github.com/kstyrc/embedded-redis. We've updated the embedded Redis binaries to version 6.2.7 so we can write tests that use recent Redis features without imposing dependencies that are not well-encapsulated by a single Maven/Gradle build.
 
 Maven dependency
 ==============
@@ -142,10 +142,10 @@ Redis version
 
 By default, RedisServer runs an OS-specific executable enclosed in in the `embedded-redis` jar. The jar includes:
 
-- Redis 6.2.6 for Linux/Unix (i386, x86_64 and arm64)
-- Redis 6.2.6 for macOS (x86_64 and arm64e AKA Apple Silicon)
+- Redis 6.2.7 for Linux/Unix (i386, x86_64 and arm64)
+- Redis 6.2.7 for macOS (x86_64 and arm64e AKA Apple Silicon)
 
-The enclosed binaries are built from source from the [`6.2.6` tag](https://github.com/redis/redis/releases/tag/6.2.6) in the official Redis repository. The Linux and Darwin/macOS binaries are statically-linked amd64 and x86 executables built using the [build-server-binaries.sh](src/main/docker/build-server-binaries.sh) script included in this repository at `/src/main/docker`.  Windows binaries are not included because Windows is not officially supported by Redis.
+The enclosed binaries are built from source from the [`6.2.7` tag](https://github.com/redis/redis/releases/tag/6.2.7) in the official Redis repository. The Linux and Darwin/macOS binaries are statically-linked amd64 and x86 executables built using the [build-server-binaries.sh](src/main/docker/build-server-binaries.sh) script included in this repository at `/src/main/docker`.  Windows binaries are not included because Windows is not officially supported by Redis.
 
 Note: the `build-server-binaries.sh` script attempts to build all of the above noted OS and architectures, which means that it expects the local Docker daemon to support all of them.  Docker Desktop on macOS and Windows supports multi-arch builds out of the box; Docker on Linux may require [additional configuration](https://docs.docker.com/buildx/working-with-buildx/).
 
