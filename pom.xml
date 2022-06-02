@@ -4,7 +4,7 @@
     <groupId>org.signal</groupId>
     <artifactId>embedded-redis</artifactId>
     <packaging>jar</packaging>
-    <version>0.8.3</version>
+    <version>0.8.4-SNAPSHOT</version>
     <name>embedded-redis</name>
     <description>Redis embedded server for Java integration testing.</description>
     <url>https://github.com/signalapp/embedded-redis</url>
@@ -21,7 +21,7 @@
         <url>https://github.com/signalapp/embedded-redis</url>
         <connection>scm:git:https://github.com/signalapp/embedded-redis.git</connection>
         <developerConnection>scm:git:git@github.com:signalapp/embedded-redis.git</developerConnection>
-      <tag>0.8.3</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <developers>
