@@ -30,7 +30,7 @@ public class RedisExecProvider {
         executables.put(OsArchitecture.UNIX_x86_64, "redis-server-" + redisVersion + "-linux-amd64");
         executables.put(OsArchitecture.UNIX_arm64, "redis-server-" + redisVersion + "-linux-arm64");
 
-        executables.put(OsArchitecture.MAC_OS_X_x86_64, "redis-server-" + redisVersion + "-darwin-x86_64");
+        executables.put(OsArchitecture.MAC_OS_X_x86_64, "redis-server-" + redisVersion + "-darwin-amd64");
         executables.put(OsArchitecture.MAC_OS_X_arm64, "redis-server-" + redisVersion + "-darwin-arm64");
     }
 
