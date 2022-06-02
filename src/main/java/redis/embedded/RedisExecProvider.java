@@ -15,7 +15,7 @@ public class RedisExecProvider {
 
     private final Map<OsArchitecture, String> executables = Maps.newHashMap();
 
-    public static final String redisVersion = "6.2.6";
+    public static final String redisVersion = "6.2.7";
 
     public static RedisExecProvider defaultProvider() {
         return new RedisExecProvider();
