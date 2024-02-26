@@ -2,7 +2,7 @@
 
 set -e
 
-REDIS_VERSION=6.2.7
+REDIS_VERSION=7.0.15
 REDIS_TARBALL="redis-${REDIS_VERSION}.tar.gz"
 REDIS_URL="https://download.redis.io/releases/${REDIS_TARBALL}"
 
