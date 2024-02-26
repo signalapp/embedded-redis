@@ -1,4 +1,4 @@
-ARG ALPINE_VERSION=3.16
+ARG ALPINE_VERSION=3.19.1
 FROM alpine:${ALPINE_VERSION}
 RUN apk add --no-cache gcc musl-dev openssl-dev openssl-libs-static make pkgconfig linux-headers
 
