@@ -184,6 +184,11 @@ Contributors
 Changelog
 ==============
 
+### 0.9.0
+ * Updated to Redis 7.0.15
+ * Updated Guava to 33
+ * Updated JUnit to 4.13.2
+
 ### 0.8.3
  * Updated to Redis 6.2.7
  * Statically link Linux binaries with OpenSSL instead of LibreSSL to avoid `openssl.cnf` incompatibilities
