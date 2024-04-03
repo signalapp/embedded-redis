@@ -79,7 +79,9 @@ public class RedisServerBuilder {
     }
 
     public RedisServer build() {
-        setting("bind "+bind);
+        if(redisConf == null) {
+            setting("bind " + bind);
+        }
         tryResolveConfAndExec();
         List<String> args = buildCommandArgs();
         return new RedisServer(args, port, tlsPort);
