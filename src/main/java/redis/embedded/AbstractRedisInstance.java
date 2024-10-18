@@ -63,16 +63,16 @@ abstract class AbstractRedisInstance implements Redis {
     private void awaitRedisServerReady() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(redisProcess.getInputStream()));
         try {
-            StringBuffer outputStringBuffer = new StringBuffer();
+            StringBuilder outputStringBuilder = new StringBuilder();
             String outputLine;
             do {
                 outputLine = reader.readLine();
                 if (outputLine == null) {
-                    //Something goes wrong. Stream is ended before server was activated.
-                    throw new RuntimeException("Can't start redis server. Check logs for details. Redis process log: " + outputStringBuffer.toString());
+                    // Something is wrong. Stream ended before server was activated.
+                    throw new EmbeddedRedisException("Redis server failed to become ready. Check logs for details. Redis process log: " + outputStringBuilder.toString());
                 } else {
-                    outputStringBuffer.append("\n");
-                    outputStringBuffer.append(outputLine);
+                    outputStringBuilder.append("\n");
+                    outputStringBuilder.append(outputLine);
                 }
             } while (!outputLine.matches(redisReadyPattern()));
         } finally {
